@@ -1,0 +1,927 @@
+{
+"0": [
+"saiyat",
+"high",
+"Wat Pho reclining"
+],
+"1": [
+"saiyat",
+"high",
+"Wat Lokayasutharam reclining"
+],
+"2": [
+"saiyat",
+"high",
+"Wat Khun Inthapramun reclining head"
+],
+"3": [
+"uncertain",
+"low",
+"Wat Pho feet-soles close-up, pose not shown"
+],
+"4": [
+"saiyat",
+"high",
+"Wat Yai Chai Mongkhon reclining"
+],
+"5": [
+"saiyat",
+"high",
+"Wat Pa Mok reclining"
+],
+"6": [
+"saiyat",
+"high",
+"Wat Bowonniwet reclining"
+],
+"7": [
+"uncertain",
+"low",
+"Wat Paramai Yikawat rep is chedi/courtyard scenery"
+],
+"8": [
+"exclude",
+"high",
+"information sign, no statue"
+],
+"9": [
+"saiyat",
+"high",
+"Wat Ku reclining"
+],
+"10": [
+"saiyat",
+"medium",
+"Wat Phra That Doi Suthep reclining with disciples"
+],
+"11": [
+"saiyat",
+"high",
+"Wat Suwan Khuha reclining in cave"
+],
+"12": [
+"saiyat",
+"high",
+"reclining in temple"
+],
+"13": [
+"saiyat",
+"high",
+"Wat Phra That Chae Haeng reclining"
+],
+"14": [
+"saiyat",
+"high",
+"Wat Hat Yai Nai reclining"
+],
+"15": [
+"exclude",
+"high",
+"Postures & Gestures of the Buddha chart/poster"
+],
+"16": [
+"saiyat",
+"high",
+"Wat Phutthai Sawan reclining outdoor"
+],
+"17": [
+"saiyat",
+"medium",
+"reclining on ornate altar"
+],
+"18": [
+"saiyat",
+"high",
+"Wat Suthat bronze reclining in niche"
+],
+"19": [
+"saiyat",
+"medium",
+"reclining behind disciple figures"
+],
+"20": [
+"saiyat",
+"medium",
+"outdoor reclining, distant"
+],
+"21": [
+"saiyat",
+"medium",
+"reclining face close-up"
+],
+"22": [
+"saiyat",
+"high",
+"reclining head on lotus"
+],
+"23": [
+"saiyat",
+"medium",
+"reclining face close-up, dark bronze"
+],
+"24": [
+"saiyat",
+"medium",
+"reclining face close-up"
+],
+"25": [
+"uncertain",
+"low",
+"Kamphaeng Phet ruins, seated figure not reclining"
+],
+"26": [
+"exclude",
+"medium",
+"stone Buddha heads only, ruins"
+],
+"27": [
+"uncertain",
+"low",
+"ruins, seated Buddhas and heads"
+],
+"28": [
+"saiyat",
+"medium",
+"stone reclining head in ruins"
+],
+"29": [
+"uncertain",
+"low",
+"Wat Paramaiyikawat golden feet-soles, pose not shown"
+],
+"30": [
+"saiyat",
+"medium",
+"stone reclining head in ruins w/ sash"
+],
+"31": [
+"saiyat",
+"medium",
+"draped reclining Buddha + tiger statue"
+],
+"32": [
+"saiyat",
+"high",
+"Wat Phra Singh reclining"
+],
+"33": [
+"saiyat",
+"medium",
+"rooftop reclining, distant"
+],
+"34": [
+"saiyat",
+"high",
+"Wat Saphan Lueak reclining indoor"
+],
+"35": [
+"saiyat",
+"medium",
+"draped reclining in ruins"
+],
+"36": [
+"saiyat",
+"high",
+"Wat Dhammachaksemaram reclining"
+],
+"37": [
+"saiyat",
+"high",
+"Wat Khao Tao reclining"
+],
+"38": [
+"saiyat",
+"medium",
+"Wat Phra Kaeo KPP stone reclining ruins"
+],
+"39": [
+"saiyat",
+"high",
+"Wat Poramaiyikawat reclining through doorway"
+],
+"40": [
+"saiyat",
+"high",
+"Wat Ratchakrue reclining"
+],
+"41": [
+"saiyat",
+"high",
+"Wat Phra Baromathat Nakhon Sri reclining"
+],
+"42": [
+"exclude",
+"medium",
+"gilded relief panel of reclining Buddha"
+],
+"43": [
+"uncertain",
+"low",
+"row of small Buddhas on balustrade"
+],
+"44": [
+"saiyat",
+"high",
+"reclining in hall"
+],
+"45": [
+"saiyat",
+"high",
+"reclining head on hand"
+],
+"46": [
+"saiyat",
+"high",
+"reclining in white hall"
+],
+"47": [
+"saiyat",
+"medium",
+"reclining draped yellow + bust foreground"
+],
+"48": [
+"exclude",
+"high",
+"stone relief panel Mucalinda scene, non-Thai"
+],
+"49": [
+"uncertain",
+"low",
+"distant naga shrine in pond"
+],
+"50": [
+"uncertain",
+"low",
+"large naga monument, Buddha unclear"
+],
+"51": [
+"exclude",
+"high",
+"Sri Lankan cave stupa, non-Thai"
+],
+"52": [
+"nakprok",
+"medium",
+"modern painted naga-hood shrine over Buddhas"
+],
+"53": [
+"exclude",
+"high",
+"carved stone stele, Indian/Pala non-Thai"
+],
+"54": [
+"exclude",
+"medium",
+"Khmer naga Buddha museum piece, non-Thai broken"
+],
+"55": [
+"nakprok",
+"medium",
+"dark naga-hood seated Buddha w/ aureole"
+],
+"56": [
+"exclude",
+"medium",
+"Khmer Wat-period naga Buddha, non-Thai"
+],
+"57": [
+"nakprok",
+"low",
+"weathered sandstone naga-hood seated, style ambiguous"
+],
+"58": [
+"exclude",
+"high",
+"gilt Tara/bodhisattva Tibetan/Nepali, non-Thai"
+],
+"59": [
+"exclude",
+"high",
+"Chinese marble standing figure, non-Thai"
+],
+"60": [
+"exclude",
+"high",
+"Indian relief Buddha + Hanuman, non-Thai/Hindu"
+],
+"61": [
+"exclude",
+"high",
+"Indian/Pala bodhisattva stele, non-Thai"
+],
+"62": [
+"exclude",
+"high",
+"gilt Nepali/Tibetan Tara, non-Thai"
+],
+"63": [
+"uncertain",
+"low",
+"standing, arms down, hands unclear"
+],
+"64": [
+"uncertain",
+"low",
+"stone standing museum piece, weathered"
+],
+"65": [
+"uncertain",
+"low",
+"Wat Phra Si Rattana Mahathat standing outdoor distant"
+],
+"66": [
+"uncertain",
+"low",
+"Wat Mahathat Sukhothai tall standing Attharot, distant"
+],
+"67": [
+"uncertain",
+"low",
+"Wat Intharawihan standing under scaffolding, not visible"
+],
+"68": [
+"uncertain",
+"low",
+"Wat Thip Sukhontharam distant standing on hill"
+],
+"69": [
+"uncertain",
+"low",
+"Wat Wiset Kan crowned standing, hands unclear"
+],
+"70": [
+"unknown",
+"medium",
+"crowned standing double-abhaya (Ham Yat)"
+],
+"71": [
+"unknown",
+"medium",
+"crowned standing double-abhaya"
+],
+"72": [
+"unknown",
+"medium",
+"Wat Wiset Kan crowned standing double-abhaya"
+],
+"73": [
+"unknown",
+"medium",
+"Wat Takiab standing abhaya raised hand"
+],
+"74": [
+"uncertain",
+"low",
+"Wat Burapha Phiram tall standing outdoor distant"
+],
+"75": [
+"unknown",
+"medium",
+"standing double-abhaya in niche"
+],
+"76": [
+"unknown",
+"medium",
+"standing abhaya in niche"
+],
+"77": [
+"uncertain",
+"low",
+"standing under scaffolding, arms down"
+],
+"78": [
+"unknown",
+"medium",
+"outdoor standing abhaya raised hand"
+],
+"79": [
+"unknown",
+"medium",
+"outdoor standing abhaya"
+],
+"80": [
+"uncertain",
+"low",
+"standing in building-facade niche, distant"
+],
+"81": [
+"uncertain",
+"low",
+"distant tall outdoor standing"
+],
+"82": [
+"unknown",
+"medium",
+"Wat Kham Chanot standing raised hand"
+],
+"83": [
+"unknown",
+"medium",
+"Wat Phra That Su Thon standing abhaya close-up"
+],
+"84": [
+"unknown",
+"medium",
+"Wat Tha Khaek standing raised hand outdoor"
+],
+"85": [
+"uncertain",
+"low",
+"Wat Jedi Jed Taew eroded standing in niche"
+],
+"86": [
+"uncertain",
+"low",
+"standing in niche, hands unclear"
+],
+"87": [
+"unknown",
+"medium",
+"lila/walking standing outdoor"
+],
+"88": [
+"uncertain",
+"low",
+"distant temple interior"
+],
+"89": [
+"uncertain",
+"low",
+"distant altar"
+],
+"90": [
+"exclude",
+"medium",
+"bust/head+shoulders, no hands"
+],
+"91": [
+"unknown",
+"medium",
+"standing abhaya raised hand"
+],
+"92": [
+"exclude",
+"medium",
+"head detail, no pose"
+],
+"93": [
+"marawichai",
+"high",
+"Wat Traimit golden Buddha earth-touching"
+],
+"94": [
+"marawichai",
+"low",
+"Wat Suthat face-only rep, principal is Maravijaya"
+],
+"95": [
+"marawichai",
+"high",
+"Wat Phanan Choeng seated earth-touching"
+],
+"96": [
+"uncertain",
+"low",
+"ornate golden tower/reliquary, no clear pose"
+],
+"97": [
+"uncertain",
+"low",
+"two face close-ups, no hands"
+],
+"98": [
+"uncertain",
+"low",
+"close-up, hands hidden"
+],
+"99": [
+"marawichai",
+"medium",
+"two seated Buddhas, right one earth-touching"
+],
+"100": [
+"marawichai",
+"medium",
+"Wat Suthat distant seated earth-touching"
+],
+"101": [
+"marawichai",
+"low",
+"Wat Tham Suea distant temple exterior"
+],
+"102": [
+"marawichai",
+"high",
+"Wat Kanlayanamit earth-touching"
+],
+"103": [
+"uncertain",
+"low",
+"Wat Pathum Wanaram distant altar + mural composite"
+],
+"104": [
+"uncertain",
+"low",
+"Wat Pathum Wanaram corridor, Buddha barely visible"
+],
+"105": [
+"marawichai",
+"high",
+"seated earth-touching"
+],
+"106": [
+"unknown",
+"low",
+"Wat Sa Ket B&W archival standing, arms at sides"
+],
+"107": [
+"unknown",
+"medium",
+"Wat Pa Lelai = Pang Palelai, not one of 5"
+],
+"108": [
+"uncertain",
+"low",
+"museum seated relief, pose ambiguous"
+],
+"109": [
+"marawichai",
+"medium",
+"Wat Arun seated earth-touching"
+],
+"110": [
+"uncertain",
+"low",
+"green/emerald Buddha, blurry"
+],
+"111": [
+"uncertain",
+"low",
+"crowned Buddha face close-up"
+],
+"112": [
+"marawichai",
+"high",
+"seated earth-touching"
+],
+"113": [
+"marawichai",
+"medium",
+"Wat Phra Sing central seated earth-touching"
+],
+"114": [
+"uncertain",
+"low",
+"Wat Rachathiwat distant dark altar"
+],
+"115": [
+"uncertain",
+"low",
+"Wat Kharuehabodi hands centered, marawichai/samathi ambiguous"
+],
+"116": [
+"marawichai",
+"medium",
+"seated earth-touching"
+],
+"117": [
+"uncertain",
+"low",
+"Wat Ban San Songkran bathing scene, small statues"
+],
+"118": [
+"uncertain",
+"low",
+"Wat Sopharam distant roadside giant Buddha"
+],
+"119": [
+"marawichai",
+"high",
+"seated earth-touching, red backdrop"
+],
+"120": [
+"marawichai",
+"high",
+"Wat Hiranyawat earth-touching"
+],
+"121": [
+"marawichai",
+"low",
+"distant outdoor big Buddha"
+],
+"122": [
+"uncertain",
+"low",
+"Wat Phra Kaeo distant altar, hand unclear"
+],
+"123": [
+"uncertain",
+"low",
+"Wat Thepthidaram distant high niche"
+],
+"124": [
+"marawichai",
+"high",
+"jade green Buddha earth-touching"
+],
+"125": [
+"uncertain",
+"low",
+"Wat Phra That Doi Suthep emerald replica, obscured"
+],
+"126": [
+"uncertain",
+"low",
+"Wat Ban San dark stone Buddhas"
+],
+"127": [
+"marawichai",
+"medium",
+"seated with disciples, earth-touching"
+],
+"128": [
+"uncertain",
+"low",
+"museum hall, many statues"
+],
+"129": [
+"marawichai",
+"high",
+"seated earth-touching"
+],
+"130": [
+"uncertain",
+"low",
+"distant hall corridor"
+],
+"131": [
+"uncertain",
+"low",
+"Wat Pak Nam giant Buddha upper body, hands not shown"
+],
+"132": [
+"uncertain",
+"low",
+"Wat Phra Sing distant altar"
+],
+"133": [
+"uncertain",
+"low",
+"Wat Thung Saliam distant throne"
+],
+"134": [
+"marawichai",
+"high",
+"Wat Na Phra Men crowned earth-touching"
+],
+"135": [
+"marawichai",
+"high",
+"Wat Rajaphatikaram bejeweled earth-touching"
+],
+"136": [
+"marawichai",
+"medium",
+"Wat Si Thammaram bronze in case, earth-touching"
+],
+"137": [
+"exclude",
+"medium",
+"Wat Sri Suphan silver relief medallion"
+],
+"138": [
+"marawichai",
+"high",
+"Wat Hong Rattanaram earth-touching"
+],
+"139": [
+"uncertain",
+"low",
+"Wat Pho Chai wide interior, pose unclear"
+],
+"140": [
+"marawichai",
+"medium",
+"seated earth-touching, lower Buddha clear"
+],
+"141": [
+"uncertain",
+"low",
+"side-view bronze being bathed"
+],
+"142": [
+"exclude",
+"high",
+"back view against sky"
+],
+"143": [
+"marawichai",
+"high",
+"seated earth-touching under umbrella"
+],
+"144": [
+"uncertain",
+"low",
+"Wat Phra Kaeo dark seated in niche"
+],
+"145": [
+"exclude",
+"high",
+"white amulet/votive tablet"
+],
+"146": [
+"marawichai",
+"medium",
+"Wat Phiphat Mongkhon three seated earth-touching"
+],
+"147": [
+"exclude",
+"high",
+"red information sign, no statue"
+],
+"148": [
+"marawichai",
+"medium",
+"Wat Khun Talot gold-leaf earth-touching"
+],
+"149": [
+"marawichai",
+"high",
+"seated earth-touching in niche"
+],
+"150": [
+"marawichai",
+"medium",
+"Wat Sawang Arom seated earth-touching"
+],
+"151": [
+"uncertain",
+"low",
+"Wat Ratchapradit hands in lap, ambiguous"
+],
+"152": [
+"marawichai",
+"high",
+"Wat Ton Son seated earth-touching"
+],
+"153": [
+"marawichai",
+"low",
+"Wat Arun robe-draped seated, hands obscured"
+],
+"154": [
+"exclude",
+"high",
+"painting/model of temple complex"
+],
+"155": [
+"marawichai",
+"medium",
+"Wat Tawet Nai seated earth-touching"
+],
+"156": [
+"uncertain",
+"low",
+"Wat Khlong Khaneng event-stage shrine, tiny Buddha"
+],
+"157": [
+"exclude",
+"medium",
+"roadside red hermit/deity figure, not Buddha"
+],
+"158": [
+"marawichai",
+"medium",
+"Wat Ton Son outdoor earth-touching"
+],
+"159": [
+"marawichai",
+"high",
+"Wat Pho seated earth-touching"
+],
+"160": [
+"marawichai",
+"high",
+"Wat Lamduan outdoor lotus earth-touching"
+],
+"161": [
+"exclude",
+"high",
+"provincial logo/seal Phitsanulok Phra Chinnarat"
+],
+"162": [
+"marawichai",
+"high",
+"Wat Thep Phithak Punnaram white outdoor earth-touching"
+],
+"163": [
+"samathi",
+"low",
+"Wat Phra Pathommachedi hands-in-lap meditation"
+],
+"164": [
+"marawichai",
+"high",
+"Wat Ratchabopit outdoor earth-touching"
+],
+"165": [
+"marawichai",
+"high",
+"seated earth-touching, ornate base"
+],
+"166": [
+"marawichai",
+"high",
+"outdoor seated earth-touching"
+],
+"167": [
+"samathi",
+"medium",
+"Wat Benchamabophit bronze meditation, hands in lap"
+],
+"168": [
+"unknown",
+"medium",
+"right hand raised abhaya, not one of 5"
+],
+"169": [
+"marawichai",
+"high",
+"Chinnarat-style seated earth-touching"
+],
+"170": [
+"uncertain",
+"low",
+"Wat Ban Krang weathered stone Buddha in field"
+],
+"171": [
+"unknown",
+"medium",
+"emaciated fasting Buddha archival, not one of 5"
+],
+"172": [
+"marawichai",
+"medium",
+"seated earth-touching in niche"
+],
+"173": [
+"samathi",
+"low",
+"Wat Khung Taphao weathered stone, hands in lap"
+],
+"174": [
+"marawichai",
+"medium",
+"corridor seated earth-touching"
+],
+"175": [
+"marawichai",
+"high",
+"crowned bronze earth-touching"
+],
+"176": [
+"marawichai",
+"medium",
+"Wat Paramai Yikawat seated earth-touching"
+],
+"177": [
+"marawichai",
+"medium",
+"white robed seated earth-touching"
+],
+"178": [
+"uncertain",
+"low",
+"dark Buddha w/ offering threads, hands obscured"
+],
+"179": [
+"uncertain",
+"low",
+"Dvaravati wheel-halo figure, unusual pose"
+],
+"180": [
+"uncertain",
+"low",
+"gold-leaf seated, hands ambiguous"
+],
+"181": [
+"uncertain",
+"low",
+"rustic shrine, multiple small Buddhas"
+],
+"182": [
+"exclude",
+"medium",
+"Burmese/Mon-style Buddha + Golden Rock, non-Thai"
+],
+"183": [
+"samathi",
+"medium",
+"crowned seated hands-in-lap meditation"
+],
+"184": [
+"unknown",
+"medium",
+"Dvaravati raised-hand vitarka, not one of 5"
+]
+}

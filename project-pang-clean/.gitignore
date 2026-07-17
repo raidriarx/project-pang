@@ -1,0 +1,4 @@
+# bulk image data — ships as a zip on GitHub Releases, reproducible via download_images.py
+raw/
+images/
+.DS_Store
