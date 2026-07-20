@@ -2,3 +2,7 @@
 raw/
 images/
 .DS_Store
+dl.log
+sheets.log
+download_failures.json
+*.tmp
