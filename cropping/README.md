@@ -21,6 +21,13 @@ You'll find one subfolder per pose — `marawichai/`, `samathi/`, `nakprok/`, `p
 - Several statues in frame → crop the **largest/front statue matching the folder's pose** (pose reference: marawichai = right hand over the knee pointing down · samathi = both hands stacked in the lap · nakprok = serpent hood over the head · prathanphon = right hand open, palm up on the knee · saiyat = reclining).
 - If a photo can't be cropped sensibly (statue barely visible, doesn't match the pose), skip it and list the filename in `skipped.txt`.
 
+## Relabel a photo
+
+If the suggested pose is wrong, choose the correct pose with the buttons below the
+photo or press `1` through `5`. Relabeling is saved in `relabels.json`. If the
+photo was already cropped, the app safely moves its crop into the corrected pose
+folder while keeping the original source path for provenance.
+
 ## Return the results
 
 1. Zip your output as **`cropped-batch1.zip`** (include `crops.json` and `skipped.txt` if you have them).

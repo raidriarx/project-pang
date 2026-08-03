@@ -1,0 +1,6 @@
+__pycache__/
+*.py[cod]
+
+# Downloaded candidate images are reproducible from the tracked manifest.
+data/rare_candidates/images/
+cropping/to-crop-batch*/

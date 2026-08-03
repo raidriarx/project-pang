@@ -19,6 +19,7 @@ BATCH_RE = re.compile(r"^to-crop-batch(\d+)$")
 ROOT = Path(__file__).resolve().parent
 CROPS_FILE = ROOT / "crops.json"
 SKIPPED_FILE = ROOT / "skipped.txt"
+RELABELS_FILE = ROOT / "relabels.json"
 LOCK = threading.RLock()
 HISTORY: list[str] = []
 
@@ -38,6 +39,16 @@ def load_skipped() -> set[str]:
         return set()
 
 
+def load_relabels() -> dict[str, str]:
+    try:
+        value = json.loads(RELABELS_FILE.read_text(encoding="utf-8"))
+        if not isinstance(value, dict):
+            return {}
+        return {key: pose for key, pose in value.items() if pose in POSES}
+    except (FileNotFoundError, json.JSONDecodeError, OSError):
+        return {}
+
+
 def atomic_json(path: Path, value: object) -> None:
     temp = path.with_suffix(path.suffix + ".tmp")
     temp.write_text(json.dumps(value, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
@@ -46,6 +57,7 @@ def atomic_json(path: Path, value: object) -> None:
 
 def scan() -> list[dict[str, str]]:
     items = []
+    relabels = load_relabels()
     batches = []
     for folder in ROOT.iterdir():
         match = BATCH_RE.match(folder.name) if folder.is_dir() else None
@@ -59,7 +71,8 @@ def scan() -> list[dict[str, str]]:
             for photo in sorted(pose_dir.iterdir(), key=lambda p: p.name.casefold()):
                 if photo.is_file() and photo.suffix.lower() in {".jpg", ".jpeg"}:
                     key = f"batch{number}/{pose}/{photo.name}"
-                    items.append({"key": key, "batch": f"batch{number}", "pose": pose,
+                    items.append({"key": key, "batch": f"batch{number}",
+                                  "pose": relabels.get(key, pose), "original_pose": pose,
                                   "name": photo.name, "url": "/image?path=" + urllib.parse.quote(key)})
     return items
 
@@ -78,7 +91,8 @@ def key_parts(key: str) -> tuple[int, str, str]:
 def paths_for(key: str) -> tuple[Path, Path]:
     number, pose, name = key_parts(key)
     source = ROOT / f"to-crop-batch{number}" / pose / name
-    output = ROOT / f"cropped-batch{number}" / pose / name
+    output_pose = load_relabels().get(key, pose)
+    output = ROOT / f"cropped-batch{number}" / output_pose / name
     if not source.is_file():
         raise FileNotFoundError(key)
     return source, output
@@ -87,23 +101,25 @@ def paths_for(key: str) -> tuple[Path, Path]:
 HTML = r'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Project Pang Cropper</title><style>
-:root{color-scheme:dark;font-family:system-ui,sans-serif}*{box-sizing:border-box}body{margin:0;background:#111;color:#eee;height:100vh;overflow:hidden;display:grid;grid-template-rows:auto 1fr auto}
+:root{color-scheme:dark;font-family:system-ui,sans-serif}*{box-sizing:border-box}body{margin:0;background:#111;color:#eee;height:100vh;overflow:hidden;display:grid;grid-template-rows:auto 1fr auto auto}
 header{padding:10px 18px;background:#1b1b1b;display:grid;grid-template-columns:1fr auto;gap:5px 20px;align-items:center;border-bottom:1px solid #333}.pose{font-size:1.45rem;font-weight:700;text-transform:capitalize}.meta,.count{color:#aaa;font-size:.9rem}.count{text-align:right}.bar{grid-column:1/-1;height:3px;background:#333}.fill{height:100%;background:#5bc07b;transition:width .2s}
-main{position:relative;min-height:0;display:flex;align-items:center;justify-content:center;padding:10px;user-select:none}.stage{position:relative;display:inline-block;line-height:0;max-width:100%;max-height:100%}img{display:block;max-width:100%;max-height:calc(100vh - 128px);object-fit:contain;-webkit-user-drag:none}.selection,.saved{position:absolute;pointer-events:none}.selection{border:2px dashed #fff;background:#ffffff18}.saved{border:2px solid #52d678;background:#52d67812}
-footer{padding:9px;text-align:center;color:#aaa;background:#1b1b1b;border-top:1px solid #333;font-size:.85rem}kbd{background:#333;border:1px solid #555;border-radius:4px;padding:1px 5px;color:#eee}.empty{font-size:1.3rem;color:#aaa}.toast{position:fixed;left:50%;bottom:50px;transform:translateX(-50%);background:#eee;color:#111;padding:8px 14px;border-radius:6px;opacity:0;transition:opacity .15s;z-index:5}.toast.show{opacity:1}.busy{cursor:wait}
+main{position:relative;min-height:0;display:flex;align-items:center;justify-content:center;padding:10px;user-select:none}.stage{position:relative;display:inline-block;line-height:0;max-width:100%;max-height:100%}img{display:block;max-width:100%;max-height:calc(100vh - 170px);object-fit:contain;-webkit-user-drag:none}.selection,.saved{position:absolute;pointer-events:none}.selection{border:2px dashed #fff;background:#ffffff18}.saved{border:2px solid #52d678;background:#52d67812}
+footer{padding:9px;text-align:center;color:#aaa;background:#1b1b1b;border-top:1px solid #333;font-size:.85rem}.labels{display:flex;gap:5px;justify-content:center;padding:7px;background:#1b1b1b;flex-wrap:wrap}.label{border:1px solid #555;background:#292929;color:#ddd;border-radius:5px;padding:4px 9px;cursor:pointer}.label:hover{background:#383838}.label.active{border-color:#5bc07b;background:#24452e;color:#fff}kbd{background:#333;border:1px solid #555;border-radius:4px;padding:1px 5px;color:#eee}.empty{font-size:1.3rem;color:#aaa}.toast{position:fixed;left:50%;bottom:70px;transform:translateX(-50%);background:#eee;color:#111;padding:8px 14px;border-radius:6px;opacity:0;transition:opacity .15s;z-index:5}.toast.show{opacity:1}.busy{cursor:wait}
 </style></head><body>
 <header><div><div class="pose" id="pose">Cropper</div><div class="meta" id="meta"></div></div><div class="count" id="count"></div><div class="bar"><div class="fill" id="fill"></div></div></header>
 <main id="main"><div class="stage" id="stage"><img id="photo" draggable="false"><div class="saved" id="saved" hidden></div><div class="selection" id="selection" hidden></div></div><div class="empty" id="empty" hidden></div></main>
+<div class="labels" id="labels"></div>
 <footer><kbd>←</kbd>/<kbd>→</kbd> navigate · drag to crop · <kbd>Z</kbd> undo · <kbd>S</kbd> skip · <kbd>Esc</kbd> cancel</footer><div class="toast" id="toast"></div>
 <script>
-const $=id=>document.getElementById(id);let state={items:[],crops:{},skipped:[]},index=0,drag=null,busy=false;
+const $=id=>document.getElementById(id),poses=['marawichai','samathi','nakprok','prathanphon','saiyat'];let state={items:[],crops:{},skipped:[]},index=0,drag=null,busy=false;
+poses.forEach((p,i)=>{const b=document.createElement('button');b.className='label';b.dataset.pose=p;b.textContent=`${i+1} ${p}`;b.onclick=()=>relabel(p);$('labels').appendChild(b)});
 function toast(s){$('toast').textContent=s;$('toast').classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>$('toast').classList.remove('show'),1300)}
 async function api(url,opt){const r=await fetch(url,opt);const j=await r.json();if(!r.ok)throw Error(j.error||r.statusText);return j}
 function completed(){return state.items.filter(x=>state.crops[x.key]||state.skipped.includes(x.key)).length}
 function firstPending(){const i=state.items.findIndex(x=>!state.crops[x.key]&&!state.skipped.includes(x.key));return i<0?state.items.length:i}
 function render(){cancel();const n=state.items.length,c=completed();$('count').textContent=`${c} / ${n}`;$('fill').style.width=(n?100*c/n:0)+'%';
  if(!n||index>=n){$('stage').hidden=true;$('empty').hidden=false;$('empty').textContent=n?'All photos are cropped or skipped.':'No input photos found. Unzip to-crop-batch1.zip beside crop_app.py.';$('pose').textContent=n?'Done':'Cropper';$('meta').textContent='';return}
- $('stage').hidden=false;$('empty').hidden=true;const it=state.items[index];$('pose').textContent=it.pose;$('meta').textContent=`${it.batch} · ${it.name}`;$('photo').src=it.url;$('photo').onload=()=>{showSaved();preload()};$('saved').hidden=true}
+ $('stage').hidden=false;$('empty').hidden=true;const it=state.items[index];$('pose').textContent=it.pose;$('meta').textContent=`${it.batch} · ${it.name}${it.pose!==it.original_pose?' · relabeled from '+it.original_pose:''}`;document.querySelectorAll('.label').forEach(x=>x.classList.toggle('active',x.dataset.pose===it.pose));$('photo').src=it.url;$('photo').onload=()=>{showSaved();preload()};$('saved').hidden=true}
 function preload(){if(index+1<state.items.length){const x=new Image();x.src=state.items[index+1].url}}
 function imageBox(){const im=$('photo');return {w:im.clientWidth,h:im.clientHeight,nw:im.naturalWidth,nh:im.naturalHeight}}
 function showSaved(){if(index>=state.items.length)return;const rect=state.crops[state.items[index].key],el=$('saved'),b=imageBox();if(!rect||!b.nw){el.hidden=true;return}const sx=b.w/b.nw,sy=b.h/b.nh;Object.assign(el.style,{left:rect[0]*sx+'px',top:rect[1]*sy+'px',width:rect[2]*sx+'px',height:rect[3]*sy+'px'});el.hidden=false}
@@ -115,8 +131,9 @@ function draw(){const x=Math.min(drag.start.x,drag.end.x),y=Math.min(drag.start.
 async function saveCrop(x,y,w,h){const it=state.items[index],im=$('photo'),b=imageBox(),sx=b.nw/b.w,sy=b.nh/b.h;const rect=[Math.round(x*sx),Math.round(y*sy),Math.round(w*sx),Math.round(h*sy)];rect[2]=Math.min(rect[2],b.nw-rect[0]);rect[3]=Math.min(rect[3],b.nh-rect[1]);
  const cv=document.createElement('canvas');cv.width=rect[2];cv.height=rect[3];cv.getContext('2d').drawImage(im,...rect,0,0,rect[2],rect[3]);busy=true;document.body.classList.add('busy');try{const blob=await new Promise((ok,no)=>cv.toBlob(x=>x?ok(x):no(Error('JPEG export failed')),'image/jpeg',.95));const q=new URLSearchParams({path:it.key,rect:rect.join(',')});await api('/api/save?'+q,{method:'POST',body:blob,headers:{'Content-Type':'image/jpeg'}});state.crops[it.key]=rect;state.skipped=state.skipped.filter(x=>x!==it.key);toast('Crop saved');index=firstPending();render()}catch(e){toast(e.message)}finally{busy=false;document.body.classList.remove('busy')}}
 async function skip(){if(index>=state.items.length||busy)return;try{const key=state.items[index].key;await api('/api/skip?path='+encodeURIComponent(key),{method:'POST'});if(!state.skipped.includes(key))state.skipped.push(key);toast('Skipped');index=firstPending();render()}catch(e){toast(e.message)}}
+async function relabel(pose){if(index>=state.items.length||busy||!poses.includes(pose))return;const it=state.items[index];if(it.pose===pose)return;try{const q=new URLSearchParams({path:it.key,pose});await api('/api/relabel?'+q,{method:'POST'});it.pose=pose;toast('Relabeled as '+pose);render()}catch(e){toast(e.message)}}
 async function undo(){if(busy)return;try{const j=await api('/api/undo',{method:'POST'});delete state.crops[j.path];const i=state.items.findIndex(x=>x.key===j.path);if(i>=0)index=i;toast('Last crop undone');render()}catch(e){toast(e.message)}}
-addEventListener('keydown',e=>{if(e.key==='Escape')cancel();else if(e.key==='ArrowLeft'&&index>0){index--;render()}else if(e.key==='ArrowRight'&&index<state.items.length-1){index++;render()}else if(e.key.toLowerCase()==='s')skip();else if(e.key.toLowerCase()==='z')undo()});addEventListener('resize',showSaved);
+addEventListener('keydown',e=>{if(e.key==='Escape')cancel();else if(e.key==='ArrowLeft'&&index>0){index--;render()}else if(e.key==='ArrowRight'&&index<state.items.length-1){index++;render()}else if(/^[1-5]$/.test(e.key))relabel(poses[Number(e.key)-1]);else if(e.key.toLowerCase()==='s')skip();else if(e.key.toLowerCase()==='z')undo()});addEventListener('resize',showSaved);
 api('/api/state').then(s=>{state=s;index=firstPending();render()}).catch(e=>{$('empty').hidden=false;$('empty').textContent=e.message});
 </script></body></html>'''
 
@@ -209,6 +226,31 @@ class Handler(BaseHTTPRequestHandler):
                     skipped.add(key)
                     SKIPPED_FILE.write_text("".join(x + "\n" for x in sorted(skipped)), encoding="utf-8")
                 self.json_response({"ok": True})
+            elif route == "/api/relabel":
+                key = query.get("path", "")
+                new_pose = query.get("pose", "")
+                if new_pose not in POSES:
+                    raise ValueError("invalid pose")
+                number, original_pose, name = key_parts(key)
+                source = ROOT / f"to-crop-batch{number}" / original_pose / name
+                if not source.is_file():
+                    raise FileNotFoundError(key)
+                with LOCK:
+                    relabels = load_relabels()
+                    old_pose = relabels.get(key, original_pose)
+                    old_output = ROOT / f"cropped-batch{number}" / old_pose / name
+                    new_output = ROOT / f"cropped-batch{number}" / new_pose / name
+                    if old_output != new_output and old_output.exists():
+                        if new_output.exists():
+                            raise ValueError("a crop with this name already exists in the target pose")
+                        new_output.parent.mkdir(parents=True, exist_ok=True)
+                        os.replace(old_output, new_output)
+                    if new_pose == original_pose:
+                        relabels.pop(key, None)
+                    else:
+                        relabels[key] = new_pose
+                    atomic_json(RELABELS_FILE, relabels)
+                self.json_response({"ok": True, "pose": new_pose})
             elif route == "/api/undo":
                 with LOCK:
                     crops = load_crops()
