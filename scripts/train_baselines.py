@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import json
 import random
 import re
@@ -13,7 +14,7 @@ from pathlib import Path
 import numpy as np
 import torch
 from PIL import Image
-from sklearn.metrics import accuracy_score, classification_report, f1_score
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, f1_score
 from sklearn.model_selection import StratifiedShuffleSplit
 from torch import nn
 from torch.utils.data import DataLoader, Dataset
@@ -38,6 +39,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--test-size", type=float, default=0.15)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--workers", type=int, default=0)
+    parser.add_argument("--image-size", type=int, default=224)
+    parser.add_argument("--horizontal-flip", action="store_true",
+                        help="Enable mirroring (off by default because handedness is pose-relevant)")
+    parser.add_argument("--early-stopping-patience", type=int, default=4)
     parser.add_argument("--no-pretrained", action="store_true")
     parser.add_argument("--device", choices=("auto", "cpu", "cuda", "mps"), default="auto")
     return parser.parse_args()
@@ -120,18 +125,20 @@ class PangDataset(Dataset):
         return self.transform(image), label
 
 
-def make_transforms():
+def make_transforms(image_size: int, horizontal_flip: bool):
     normalize = transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
-    train = transforms.Compose([
-        transforms.RandomResizedCrop(224, scale=(0.75, 1.0)),
-        transforms.RandomHorizontalFlip(),
+    train_steps = [
+        transforms.RandomResizedCrop(image_size, scale=(0.8, 1.0)),
         transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.15),
         transforms.ToTensor(),
         normalize,
-    ])
+    ]
+    if horizontal_flip:
+        train_steps.insert(1, transforms.RandomHorizontalFlip())
+    train = transforms.Compose(train_steps)
     evaluate = transforms.Compose([
-        transforms.Resize(256),
-        transforms.CenterCrop(224),
+        transforms.Resize(round(image_size * 256 / 224)),
+        transforms.CenterCrop(image_size),
         transforms.ToTensor(),
         normalize,
     ])
@@ -186,7 +193,7 @@ def evaluate(model, loader, criterion, device):
 
 def train_one(name, args, samples, split, device):
     train_idx, val_idx, test_idx = split
-    train_tf, eval_tf = make_transforms()
+    train_tf, eval_tf = make_transforms(args.image_size, args.horizontal_flip)
     datasets = {
         "train": PangDataset(samples, train_idx, train_tf),
         "val": PangDataset(samples, val_idx, eval_tf),
@@ -208,6 +215,7 @@ def train_one(name, args, samples, split, device):
     model_dir = args.output_dir / name
     model_dir.mkdir(parents=True, exist_ok=True)
     best_f1 = -1.0
+    epochs_without_improvement = 0
     history = []
     started = time.time()
     for epoch in range(1, args.epochs + 1):
@@ -227,20 +235,43 @@ def train_one(name, args, samples, split, device):
         print(f"{name} epoch {epoch:02d}: val macro-F1={val_metrics['macro_f1']:.4f}")
         if val_metrics["macro_f1"] > best_f1:
             best_f1 = val_metrics["macro_f1"]
+            epochs_without_improvement = 0
             torch.save({"model": model.state_dict(), "classes": CLASSES, "model_name": name}, model_dir / "best.pt")
+        else:
+            epochs_without_improvement += 1
+            if args.early_stopping_patience and epochs_without_improvement >= args.early_stopping_patience:
+                print(f"{name}: early stopping after epoch {epoch}")
+                break
 
     checkpoint = torch.load(model_dir / "best.pt", map_location=device, weights_only=True)
     model.load_state_dict(checkpoint["model"])
     test_metrics, targets, predictions = evaluate(model, loaders["test"], criterion, device)
     report = classification_report(targets, predictions, target_names=CLASSES, output_dict=True, zero_division=0)
+    matrix = confusion_matrix(targets, predictions, labels=range(len(CLASSES))).tolist()
+    with (model_dir / "predictions.csv").open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.writer(handle)
+        writer.writerow(("path", "true_label", "predicted_label", "correct"))
+        for index, target, prediction in zip(test_idx, targets, predictions):
+            writer.writerow((samples[index][0], CLASSES[target], CLASSES[prediction], target == prediction))
     result = {
         "model": name,
         "pretrained": not args.no_pretrained,
         "seed": args.seed,
+        "training_config": {
+            "epochs_requested": args.epochs,
+            "epochs_completed": len(history),
+            "batch_size": args.batch_size,
+            "learning_rate": args.learning_rate,
+            "weight_decay": args.weight_decay,
+            "image_size": args.image_size,
+            "horizontal_flip": args.horizontal_flip,
+            "early_stopping_patience": args.early_stopping_patience,
+        },
         "split_sizes": {key: len(value) for key, value in datasets.items()},
         "best_val_macro_f1": best_f1,
         "test": test_metrics,
         "classification_report": report,
+        "confusion_matrix": {"labels": CLASSES, "values": matrix},
         "training_seconds": time.time() - started,
         "history": history,
     }

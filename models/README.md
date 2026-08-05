@@ -18,6 +18,11 @@ Each model directory contains:
 `summary.json` provides the cross-model comparison. See `BASELINES.md` and
 `scripts/train_baselines.py` for dependencies, preprocessing, splitting, and training.
 
+The checkpoints in this directory were produced by the original baseline run at
+224x224 with horizontal flipping enabled and a seeded stratified holdout. The current
+runner makes flipping opt-in and also provides statue-disjoint cross-validation; new
+runs record these settings directly in `metrics.json`.
+
 Load a checkpoint with PyTorch:
 
 ```python
